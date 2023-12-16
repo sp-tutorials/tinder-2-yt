@@ -20,6 +20,7 @@
         ⚠️  The package host.exp.exponent is already in use. ✔ Continue? yes
         create `eas.json` file
         run `eas credentials` # android, development
+    1:13:00 -1:19:45
 1:50:23 Optimising using useMemo
 1:54:32 Building the Login Screen
 2:03:38 Building the Header Section of the Home Screen
