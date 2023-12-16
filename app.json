@@ -21,11 +21,17 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "host.exp.exponent"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "scheme": "mycoolredirect"
+    "scheme": "mycoolredirect",
+    "extra": {
+      "eas": {
+        "projectId": "b058d9c6-c275-4be8-9e66-8662065a24b2"
+      }
+    }
   }
 }

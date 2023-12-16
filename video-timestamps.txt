@@ -15,6 +15,11 @@
 56:13 Setting up Firebase
 57:24 Adding Firebase to the App
 1:03:05 Implementing Google Authentication
+    1:08:36 - 1:11:08 replace `expo build:android` with `npx expo prebuild -p android`
+        ? What would you like your Android package name to be? host.exp.exponent
+        ⚠️  The package host.exp.exponent is already in use. ✔ Continue? yes
+        create `eas.json` file
+        run `eas credentials` # android, development
 1:50:23 Optimising using useMemo
 1:54:32 Building the Login Screen
 2:03:38 Building the Header Section of the Home Screen
