@@ -1,0 +1,37 @@
+00:00 Introduction
+00:50 Build Showcase
+03:18 Tabnine Sponsorship
+05:24 Build Explanation
+09:12 Setting up Expo
+16:09 Expo Explanation
+18:26 Setting up Tailwind React Native
+23:04 Setting up React Native Navigation
+29:17 Initialising the Build
+34:28 Building the Home Screen (1/2)
+37:57 Building the Login Functionality (1/2)
+41:23 Creating a useAuth Custom Hook
+46:15 Implementing the Context API
+51:45 Building the Login Functionality (2/2)
+56:13 Setting up Firebase
+57:24 Adding Firebase to the App
+1:03:05 Implementing Google Authentication
+1:50:23 Optimising using useMemo
+1:54:32 Building the Login Screen
+2:03:38 Building the Header Section of the Home Screen
+2:23:53 Building the Cards Section of the Home Screen
+2:54:56 Building the Modal Screen
+3:17:35 Building the Home Screen (2/2)
+3:36:50 Implementing the Swipe Functionality
+3:54:14 Implementing the Matching Functionality
+4:09:48 Building the Match Screen
+4:18:36 Building the Chat Screen
+4:19:35 Building the Header Section of the Chat Screen
+4:24:24 Building the Chat List Section of the Chat Screen
+4:34:46 Building the Chat Row Section of the Chat Screen
+4:47:08 Building the Message Screen (1/2)
+4:50:40 Live Debugging Session 101
+5:01:21 Building the Message Screen (2/2)
+5:12:58 Implementing the Sender & Receiver Message Functionality
+5:28:38 Implementing the Last Message Functionality
+5:32:57 Final Build Demo
+5:34:36 Outro
