@@ -1,11 +1,10 @@
-import {Button, Text, View} from 'react-native';
-import tw from 'twrnc';
+import StackNavigator from "./StackNavigator";
+import {NavigationContainer} from "@react-navigation/native";
 
 export default function App() {
     return (
-        <View style={tw`flex-1 justify-center items-center`}>
-            <Text>Hello, X!</Text>
-            <Button title='Click me'/>
-        </View>
+        <NavigationContainer>
+            <StackNavigator/>
+        </NavigationContainer>
     );
 }
