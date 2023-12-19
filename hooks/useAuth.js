@@ -4,7 +4,7 @@ import * as Google from "expo-auth-session/providers/google";
 const AuthContext = createContext({})
 
 const config = {
-    androidClientId: "817141732167-sg5ut34mkbhb23h9cnb1uqb5jssa4mvb.apps.googleusercontent.com",
+    androidClientId: process.env.EXPO_PUBLIC_ANDROID_CLIENT_ID,
     scopes: ['profile', 'email'],
     permissions: ["public_profile", "email", "gender", "location"],
 }
@@ -12,7 +12,7 @@ const config = {
 export const AuthProvider = ({ children }) => {
     const [request, response, promptAsync] = Google.useAuthRequest(config);
     const signInWithGoogle = async () => {
-        promptAsync().then(logInResult => {
+        promptAsync().then(async (logInResult) => {
             if (logInResult.type === 'success') {
                 // login...
             }
