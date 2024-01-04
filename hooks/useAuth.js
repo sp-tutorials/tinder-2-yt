@@ -1,5 +1,8 @@
-import React, {createContext, useContext} from 'react';
+import React, {createContext, useContext, useEffect, useState} from 'react';
 import * as Google from "expo-auth-session/providers/google";
+import {GoogleAuthProvider, onAuthStateChanged, signInWithCredential, signOut} from "firebase/auth";
+import {auth} from '../firebase';
+import useFakeLogin from "./useFakeLogin";
 
 const AuthContext = createContext({})
 
@@ -10,20 +13,65 @@ const config = {
 }
 
 export const AuthProvider = ({ children }) => {
+    const [error, setError] = useState(null);
+    const [user, setUser] = useState(null);
+    const [loadingInitial, setLoadingInitial] = useState(true);
+    const [loading, setLoading] = useState(false);
+
+    const {fakeLoginSuccess} = useFakeLogin();
+
+    useEffect(() =>
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // Logged in...
+                setUser(user);
+            } else {
+                // Not logged in...
+                setUser(null);
+            }
+
+            setLoadingInitial(false)
+        }), []);
+
+    const logout = () => {
+        setLoading(true);
+
+        signOut(auth).catch(error => setError(error)).finally(() => setLoading(false));
+        setUser(null); // This is just for the fake login
+    }
+
     const [request, response, promptAsync] = Google.useAuthRequest(config);
     const signInWithGoogle = async () => {
-        promptAsync().then(async (logInResult) => {
+        setLoading(true);
+
+        await promptAsync().then(async (logInResult) => {
+            // fake login cuz this Google auth shit ain't working
+            if (fakeLoginSuccess) {
+                setUser({name: "Dorel"})
+            }
             if (logInResult.type === 'success') {
                 // login...
+                const { idToken, accessToken } = logInResult;
+                const credential = GoogleAuthProvider.credential(idToken, accessToken);
+
+                await signInWithCredential(auth, credential);
             }
-        });
-    }
+
+            return Promise.reject();
+        })
+            .catch(error => setError(error))
+            .finally(() => setLoading(false));
+    };
+
     return (
         <AuthContext.Provider value={{
-            user: null,
+            user,
+            loading,
+            error,
             signInWithGoogle,
+            logout,
         }}>
-            {children}
+            {!loadingInitial && children}
         </AuthContext.Provider>
     );
 }
