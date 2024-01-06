@@ -4,7 +4,13 @@ import {GoogleAuthProvider, onAuthStateChanged, signInWithCredential, signOut} f
 import {auth} from '../firebase';
 import useFakeLogin from "./useFakeLogin";
 
-const AuthContext = createContext({})
+
+const USER = {
+    name: "Dorel",
+    photoURL: "https://www.timesnewroman.ro/wp-content/uploads/2020/07/betiv_infect_bere_pet.jpg",
+};
+
+const AuthContext = createContext({user: USER})
 
 const config = {
     androidClientId: process.env.EXPO_PUBLIC_ANDROID_CLIENT_ID,
@@ -22,9 +28,10 @@ export const AuthProvider = ({ children }) => {
 
     useEffect(() =>
         onAuthStateChanged(auth, (user) => {
-            if (user) {
+            if (fakeLoginSuccess) {
+            // if (user) {
                 // Logged in...
-                setUser(user);
+                setUser(USER);
             } else {
                 // Not logged in...
                 setUser(null);
@@ -45,10 +52,6 @@ export const AuthProvider = ({ children }) => {
         setLoading(true);
 
         await promptAsync().then(async (logInResult) => {
-            // fake login cuz this Google auth shit ain't working
-            if (fakeLoginSuccess) {
-                setUser({name: "Dorel"})
-            }
             if (logInResult.type === 'success') {
                 // login...
                 const { idToken, accessToken } = logInResult;
