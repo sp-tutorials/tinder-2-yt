@@ -4,13 +4,13 @@ import useAuth from "../hooks/useAuth";
 import useFakeLogin from "../hooks/useFakeLogin";
 
 const LoginScreen = () => {
-    const {signInWithGoogle} = useAuth();
+    const { signInWithGoogle, loading } = useAuth();
     const {fakeLoginSuccess, setFakeLoginSuccess} = useFakeLogin();
 
     return (
         <View>
             <View>
-                <Text>Login to the app</Text>
+                <Text>{loading ? 'loading...' : "Login to the app"}</Text>
                 <Button title='login' onPress={signInWithGoogle}/>
             </View>
             <View>
