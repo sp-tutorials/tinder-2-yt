@@ -14,8 +14,8 @@ const HomeScreen = () => {
         /* the SafeAreaView from react-native is iOS only */
         <SafeAreaView>
             {/* Header */}
-                <View style={tw`items-center relative`}>
-                    <TouchableOpacity style={tw`absolute left-5 top-3`}>
+                <View style={tw`flex-row items-center justify-between px-5`}>
+                    <TouchableOpacity>
                         <Image style={tw`h-10 w-10 rounded-full`} source={{ uri: user.photoURL }}/>
                     </TouchableOpacity>
 
@@ -24,7 +24,7 @@ const HomeScreen = () => {
                         <Image source={require('../logo.png')} style={tw`w-15 h-15`}/>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={tw`absolute right-5 top-3`}>
+                    <TouchableOpacity>
                         <Ionicons name='chatbubbles-sharp' size={30}/>
                     </TouchableOpacity>
                 </View>
