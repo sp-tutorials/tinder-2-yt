@@ -6,8 +6,9 @@ import useFakeLogin from "./useFakeLogin";
 
 
 const USER = {
-    name: "Dorel",
+    name: "Costel",
     photoURL: "https://www.timesnewroman.ro/wp-content/uploads/2020/07/betiv_infect_bere_pet.jpg",
+    displayName: "Nea Costel, drojdier",
 };
 
 const AuthContext = createContext({user: USER})
