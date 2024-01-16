@@ -7,7 +7,7 @@ import {SafeAreaView} from "react-native-safe-area-context";
 import { AntDesign, Entypo, Ionicons } from '@expo/vector-icons';
 import Swiper from "react-native-deck-swiper";
 import {db} from "../firebase";
-import {doc, onSnapshot, collection} from "firebase/firestore";
+import {doc, onSnapshot, collection, setDoc, getDocs, query, where } from "firebase/firestore";
 
 const DUMMY_DATA = [
     {
@@ -54,7 +54,16 @@ const HomeScreen = () => {
         let unsub;
 
         const fetchCards = async () => {
-            unsub = onSnapshot(collection(db, 'users'), snapshot => {
+            const passes = await getDocs(collection(db, 'users', user.uid, 'passes'))
+                .then((snapshot) => snapshot.docs.map(doc => doc.id));
+
+            const swipes = await getDocs(collection(db, 'users', user.uid, 'swipes'))
+                .then((snapshot) => snapshot.docs.map(doc => doc.id));
+
+            const passesUserIds = passes.length > 0 ? passes : ['test'];
+            const swipesUserIds = swipes.length > 0 ? swipes : ['test'];
+
+            unsub = onSnapshot(query(collection(db, 'users'), where('id', 'not-in', [...passesUserIds, ...swipesUserIds ])), snapshot => {
                 setProfiles(
                     snapshot.docs.filter(doc => doc.id !== user.uid).map(doc => ({
                         id: doc.id,
@@ -66,7 +75,25 @@ const HomeScreen = () => {
 
         fetchCards();
         return unsub;
-    }, []);
+    }, [db]);
+
+    const swipeLeft = (cardIndex) => {
+        if (!profiles[cardIndex]) return;
+
+        const userSwiped = profiles[cardIndex];
+        console.log(`You swiped PASS on ${userSwiped.displayName}`);
+
+        setDoc(doc(db, 'users', user.uid, 'passes', userSwiped.id), userSwiped);
+    };
+
+    const swipeRight = (cardIndex) => {
+        if (!profiles[cardIndex]) return;
+
+        const userSwiped = profiles[cardIndex];
+
+        console.log(`You swiped MATCH on ${userSwiped.displayName} (${userSwiped.job})`);
+        setDoc(doc(db, 'users', user.uid, 'swipes', userSwiped.id), userSwiped);
+    };
 
     return (
         /* the SafeAreaView from react-native is iOS only */
@@ -98,8 +125,14 @@ const HomeScreen = () => {
                     cardIndex={0}
                     animateCardOpacity
                     verticalSwipe={false}
-                    onSwipedLeft={(index) => console.log(index, 'PASS')}
-                    onSwipedRight={(index) => console.log(index, 'LIKE')}
+                    onSwipedLeft={(cardIndex) => {
+                        console.log(cardIndex, 'PASS');
+                        swipeLeft(cardIndex);
+                    }}
+                    onSwipedRight={(cardIndex) => {
+                        console.log(cardIndex, 'LIKE');
+                        swipeRight(cardIndex);
+                    }}
                     backgroundColor={"#4FD0E9"}
                     overlayLabels={{
                         left: {
