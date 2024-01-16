@@ -31,6 +31,7 @@
 3:17:35 Building the Home Screen (2/2)
 3:36:50 Implementing the Swipe Functionality
 3:54:14 Implementing the Matching Functionality
+    3:56:32 - 3:57:08 disclaimer about doing the matching
 4:09:48 Building the Match Screen
 4:18:36 Building the Chat Screen
 4:19:35 Building the Header Section of the Chat Screen
