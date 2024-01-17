@@ -4,11 +4,11 @@ import {collection, onSnapshot, query, where} from "firebase/firestore";
 import {db} from "../firebase";
 import useAuth from "../hooks/useAuth";
 import tw from "twrnc";
-import ChatRow from "./ChatRow";
+import ChatRow, {MATCHED_USER} from "./ChatRow";
 
 
 const ChatList = () => {
-    const [matches, setMatches] = useState([]);
+    const [matches, setMatches] = useState([MATCHED_USER]); // MATCHED_USER is a dummy user
     const { user } = useAuth();
 
     {
