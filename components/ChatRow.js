@@ -4,6 +4,8 @@ import {useNavigation} from "@react-navigation/native";
 import useAuth from "../hooks/useAuth";
 import getMatchedUserInfo from "../lib/getMatchedUserInfo";
 import tw from "twrnc";
+import {db} from "../firebase";
+import {collection, onSnapshot, orderBy, query} from "firebase/firestore";
 
 export const MATCHED_USER = {
     age: 27,
@@ -18,11 +20,24 @@ const ChatRow = ({matchDetails}) => {
     const navigation = useNavigation();
     const { user } = useAuth();
     const [matchedUserInfo, setMatchedUserInfo] = useState(null);
+    const [lastMessage, setLastMessage] = useState('');
 
     useEffect(() => {
         setMatchedUserInfo(getMatchedUserInfo(matchDetails.users, user.uid));
         setMatchedUserInfo(MATCHED_USER)
     }, [matchDetails, user]);
+
+    useEffect(
+        () =>
+            onSnapshot(
+                query(
+                    collection(db, 'matches', matchDetails.id, 'messages'),
+                    orderBy('timestamp', 'desc') // IDEA: limit to 1
+                ),
+                snapshot => setLastMessage(snapshot.docs[0]?.data()?.message)
+            ),
+        [matchDetails, db]
+    );
 
     return (
         <TouchableOpacity
@@ -44,7 +59,7 @@ const ChatRow = ({matchDetails}) => {
                 <Text style={tw`text-lg font-semibold`}>
                     {matchedUserInfo?.displayName}
                 </Text>
-                <Text>Say Hi!</Text>
+                <Text>{lastMessage || "Say Hi!"}</Text>
             </View>
         </TouchableOpacity>
     )
